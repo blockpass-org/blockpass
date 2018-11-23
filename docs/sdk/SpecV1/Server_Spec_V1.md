@@ -476,7 +476,7 @@ Object stored kycRecord status following Mobile App format
 
 State Transition:
 
-![State Transition](../img/status-transition.png)
+![State Transition](/docs/sdk/img/status-transition.png)
 
 ``` mermaid
 graph LR
@@ -831,7 +831,7 @@ Example:
 
 ### 4. Mobile App <-> Service 's Endpoints flow chart
 
-![Mobile app register](../img/mobile-app-endpoints.png)
+![Mobile app register](/docs/sdk/img/mobile-app-endpoints.png)
 
 ``` mermaid
 graph LR

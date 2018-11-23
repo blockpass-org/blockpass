@@ -17,7 +17,7 @@
 
 ### Mobile App changelog
 
-- Changes in `country` KYC field: change from using country name to 3-letters country code. [moreinfo](../SpecV1/Server_Spec_V1#311-address-json-format-v13)
+- Changes in `country` KYC field: change from using country name to 3-letters country code. [moreinfo](/docs/sdk/SpecV1/Server_Spec_V1.md#311-address-json-format-v13)
 ```js  
 // [old format]: JSON string
 {"address":"Oili","extraInfo":"Kos","city":"Oakbc","state":"CO","postalCode":"99999","country":"United States"}
@@ -26,7 +26,7 @@
 {"address":"Street","extraInfo":"Addition info","city":"City","state":"AL","postalCode":"700000","country":"USA"}
 ```
 - Changes in `phone` KYC field: phone number will be sent along with the country codes that the number belongs to.
-[moreinfo](../SpecV1/Server_Spec_V1#312-phone-json-format-v13)
+[moreinfo](/docs/sdk/SpecV1/Server_Spec_V1.md#312-phone-json-format-v13)
 
 ```js
 // [old format]: string containing phone number
@@ -56,8 +56,8 @@
 
 Mobile App version 1.3 auto detects changes in User identity fields and show a *Resubmit* button that let user update those changes to Services. In order to enable this features. On server side it should:
 - Add a new endpoint `/resubmit`.
-- Add new flag in `KycRecordStatus`: `allowResubmit` ([more detail](./sdk/Server_Spec_V1#1-kycrecordstatus)). Service can return `false` OR not return this field at all (If Service doesn't care about changes in user data).
-- (More detail for [/resubmit](../SpecV1/Server_Spec_V1#4-resubmit))
+- Add new flag in `KycRecordStatus`: `allowResubmit` ([more detail](/docs/sdk/Server_Spec_V1.md#1-kycrecordstatus)). Service can return `false` OR not return this field at all (If Service doesn't care about changes in user data).
+- (More detail for [/resubmit](/docs/sdk/SpecV1/Server_Spec_V1.md#4-resubmit))
 
 ### Steps to upgrade a NodeJS integration
 

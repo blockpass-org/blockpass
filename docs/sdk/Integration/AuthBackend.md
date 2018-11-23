@@ -19,7 +19,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-This document target to build a service handle basic user case below following [Blockpass Server SpecV1](../SpecV1/Server_Spec_V1)
+This document target to build a service handle basic user case below following [Blockpass Server SpecV1](/docs/sdk/SpecV1/Server_Spec_V1.md)
 
 ## Expected Outcome
 
@@ -33,15 +33,15 @@ This document target to build a service handle basic user case below following [
 
 ## Blockpass Mobile App <-> Our Server
 
-According to [Login sequence chart](../SpecV1/Server_Spec_V1#4-mobile-app---service-sso-sequence-diagram). Blockpass Mobile App will call following endpoints in sequence:
+According to [Login sequence chart](/docs/sdk/SpecV1/Server_Spec_V1#4-mobile-app---service-sso-sequence-diagram.md). Blockpass Mobile App will call following endpoints in sequence:
 
 ### 1. POST `/status`
 
 Mobile app begin by query current status of user. It will give our backend `code` and `sessionCode` as paramaters:
 
-- `code`: Auth Code. Which our server using this to [bp-api-handshake](../SpecV1/Server_Spec_V1#1-handshake) and [bp-api-queryBlockpassId](../SpecV1/Server_Spec_V1#3-query-blockpassprofile) (Make sure that this request come from Blockpass mobile app)
+- `code`: Auth Code. Which our server using this to [bp-api-handshake](/docs/sdk/SpecV1/Server_Spec_V1#1-handshake.md) and [bp-api-queryBlockpassId](/docs/sdk/SpecV1/Server_Spec_V1#3-query-blockpassprofile.md) (Make sure that this request come from Blockpass mobile app)
 
-- `sessionCode`: Website session code. Which we can using [bp-api-sso-complete](../SpecV1/Server_Spec_V1#4-single-sign-on-complete) to send our `service_access_token` back to website
+- `sessionCode`: Website session code. Which we can using [bp-api-sso-complete](/docs/sdk/SpecV1/Server_Spec_V1#4-single-sign-on-complete.md) to send our `service_access_token` back to website
 
 Request Payload Example:
 
@@ -55,9 +55,9 @@ Request Payload Example:
 
 1. Perform [BasicAuth](#BasicAuth) using `code` and `sessionCode` -> `blockpassId`.
 
-2. Base on `blockpassId` gathering data and construct [KycRecordStatus](../SpecV1/Server_Spec_V1#1-kycrecordstatus) as response.
+2. Base on `blockpassId` gathering data and construct [KycRecordStatus](/docs/sdk/SpecV1/Server_Spec_V1#1-kycrecordstatus.md) as response.
 
-- **Old User**: Since this user already complete our registration process => We create our `service_access_token` and send back to Website via [bp-api-sso-complete](../SpecV1/Server_Spec_V1#4-single-sign-on-complete)
+- **Old User**: Since this user already complete our registration process => We create our `service_access_token` and send back to Website via [bp-api-sso-complete](/docs/sdk/SpecV1/Server_Spec_V1#4-single-sign-on-complete.md)
 
 ``` javascript
 { 
@@ -152,7 +152,7 @@ Content-Type: image/svg+xml
 
 2. Fill user raw data to **DataRecord** and complete user registration flow (We can perform matching user base on their provided data) and create **User**
 
-3. We create our `service_access_token` and send back to Website via [bp-api-sso-complete](../SpecV1/Server_Spec_V1#4-single-sign-on-complete)
+3. We create our `service_access_token` and send back to Website via [bp-api-sso-complete](/docs/sdk/SpecV1/Server_Spec_V1#4-single-sign-on-complete.md)
 
 ## Blockpass Data Exchange
 

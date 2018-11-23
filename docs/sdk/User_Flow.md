@@ -1,2 +1,2 @@
 # User flow
-![Suggested user flow](img/user-flow.png)
+![Suggested user flow](/docs/sdk/img/user-flow.png)

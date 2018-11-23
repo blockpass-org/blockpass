@@ -9,11 +9,11 @@
 
 ## Sandbox environment
 
-* [Test our KYC Connect Dashboard before installation](./kyc-connect-dashboard/dashboard-home-staging.md)
+* [Test our KYC Connect Dashboard before installation](/docs/kyc-connect-dashboard/dashboard-home-staging.md)
   
 
 ## Production
 
-* [Install KYC Connect Dashboard on your server](./kyc-connect-dashboard/dashboard-home.md)
+* [Install KYC Connect Dashboard on your server](/docs/kyc-connect-dashboard/dashboard-home.md)
 
 

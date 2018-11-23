@@ -7,13 +7,13 @@
 
 
 ## Specification
-  - [Suggested user flow](./sdk/User_Flow)
-  - [Server side](./sdk/SpecV1/Server_Spec_V1)
-  - [Client side](./sdk/SpecV1/Client_Spec_V1)
+  - [Suggested user flow](/docs/sdk/User_Flow.md)
+  - [Server side](/docs/sdk/SpecV1/Server_Spec_V1.md)
+  - [Client side](/docs/sdk/SpecV1/Client_Spec_V1.md)
 
 ## Integration Guide
 
-  - [Auth Service](./sdk/Integration/AuthBackend)
+  - [Auth Service](/docs/sdk/Integration/AuthBackend.md)
 
 ## SDK
   - JS

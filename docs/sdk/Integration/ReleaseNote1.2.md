@@ -24,23 +24,23 @@
 
     - User profile under review by service
 
-        ![User profile under review by service](../img/inreview.png)
+        ![User profile under review by service](/docs/sdk/img/inreview.png)
 
     - Some identity fields user should correct
 
-        ![Some identity fields user should correct](../img/rejected.png)
+        ![Some identity fields user should correct](/docs/sdk/img/rejected.png)
 
     - Kyc process completed
 
-        ![Kyc process completed](../img/approve.png)
+        ![Kyc process completed](/docs/sdk/img/approve.png)
 
 - Display BPID of current user for each service (local and  staging versions only). Click on BPID to copy to clipboard
 
-    ![Debug](../img/1.2.bpid.png)
+    ![Debug](/docs/sdk/img/1.2.bpid.png)
 
 - Display HTTP request error for service API (local and staging versions only)
 
-    ![Debug](../img/1.2.error.png)
+    ![Debug](/docs/sdk/img/1.2.error.png)
 
 ## SDK ChangeLog
 
@@ -57,7 +57,7 @@
 
 - Get the last version of the [Javascript Server SDK](https://github.com/blockpass-org/blockpass-serversdk) (example included)
 
-- **(Critical)** Change configuration to allow reception of new certificates [onfido-service-cert](../SpecV1/Server_Spec_V1#31-onfido-service-cert-version-12) and [complyadvantage-service-cert](../SpecV1/Server_Spec_V1#32-complyadvantage-service-cert-version-12)
+- **(Critical)** Change configuration to allow reception of new certificates [onfido-service-cert](/docs/sdk/SpecV1/Server_Spec_V1#31-onfido-service-cert-version-12.md) and [complyadvantage-service-cert](/docs/sdk/SpecV1/Server_Spec_V1#32-complyadvantage-service-cert-version-12.md)
 
 ``` javascript
 // old:
@@ -68,7 +68,7 @@
 
 ```
 
-- **(Optional)** Send push notification to user using [SendPushAPI](../SpecV1/Server_Spec_V1#4-send-user-online-push-notification) endpoint
+- **(Optional)** Send push notification to user using [SendPushAPI](/docs/sdk/SpecV1/Server_Spec_V1#4-send-user-online-push-notification.md) endpoint
 
 ``` javascript
 
@@ -91,7 +91,7 @@ if (bpToken != kycRecord.bpToken) {
 
 ```
 
-- **(Optional)** Return user-friendly identity verification status to mobile app. [More details](../SpecV1/Server_Spec_V1#1-kycrecordstatus)
+- **(Optional)** Return user-friendly identity verification status to mobile app. [More details](/docs/sdk/SpecV1/Server_Spec_V1#1-kycrecordstatus.md)
 
   - `received`: data received by service and under review
   - `approved`: data fields approved by service
@@ -202,7 +202,7 @@ def upload(endpoint):
 
 ```
 
-- **(Optional)** Send push notification to user using [SendPushAPI](../SpecV1/Server_Spec_V1#4-send-user-online-push-notification) endpoint
+- **(Optional)** Send push notification to user using [SendPushAPI](/docs/sdk/SpecV1/Server_Spec_V1#4-send-user-online-push-notification.md) endpoint
 
 ``` python
 

@@ -1,4 +1,4 @@
-#KYC Connect installation script guide
+# KYC Connect installation script guide
 
 - Host and port:
 

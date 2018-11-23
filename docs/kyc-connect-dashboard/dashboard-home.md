@@ -18,6 +18,9 @@ Refer to [this guide](./installation-script.md) if you are unsure how to use the
 
 At first launch, you will be asked to input the `Deployment key` (the one you have just chosen during the installation) and choose a password for the `admin` account.
 
+> :point_right: contact us to get the `Deployment key`
+
+
 ![Step0](/docs/kyc-connect-dashboard/imgs/Step0.png)
 
 - Login using `admin` account to access Administrator Page

@@ -45,7 +45,7 @@
 
 ## Advanced setup: [Optional]
 
-- Customize the docker-compose.yaml to your needs
+- Customize the `docker-compose.yaml` to your needs
 
 - Google Web push notification :
 
@@ -65,14 +65,14 @@
 
 - Certificate
 
-  After complete Kyc process. Reviewer can issue `certificate` to user
+  After a KYC profile is approved, the reviewer can issue a `certificate` to user
 
-  Certificate is digital document formated as [json-ld](https://w3c-dvcg.github.io/ld-signatures/) and sign with ECDSA (Bitcoin key)
+  Certificate is digital document formatted as [json-ld](https://w3c-dvcg.github.io/ld-signatures/) and signed with ECDSA (Bitcoin key)
 
-  Your service must do some extra setting on `Developer Portal` [Guide Here](./certificate.md)
+  To configure a certicate, some extra settings are required on the `Developer Portal` [Guide Here](./certificate.md)
 
-  If you want to issue certificate press enter and it will ask for your Key pair
+  To issue certificates, you need a ECDSA Key pair
 
   - `Public WIF Key(Bitcoin address)` your Bitcoin Address as public key
 
-  - `Private WIF Key(Bitcoin private key formated as WIF Compressed)` your Bitcoin private key formated as WIF Compressed
+  - `Private WIF Key(Bitcoin private key formated as WIF Compressed)` your Bitcoin private key formatted as WIF Compressed

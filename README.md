@@ -1,4 +1,4 @@
-# Welcome to the Blockpass Wiki
+# Welcome to the Blockpass documentation
 
 
 Blockpass offers 2 ways of integration for Merchants
@@ -10,7 +10,7 @@ Blockpass offers 2 ways of integration for Merchants
     + requires coding (Node.Js preferable)
   
   * [using our KYC dashboard](/docs/kyc-dashboard.md)
-    + provides an interface scpecifically designed for KYC verification
+    + provides an interface specifically designed for KYC verification
     + integrates all features of Blockpass by default
     + hosted by you
     + easy installation

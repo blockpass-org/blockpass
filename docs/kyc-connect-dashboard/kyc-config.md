@@ -2,8 +2,7 @@
 
 - Login to Blockpass Developer Portal
 
-  - Staging: [https://developer-sandbox.blockpass.org](https://developer-sandbox.blockpass.org)
-  - Production: [https://developer.blockpass.org](https://developer.blockpass.org)
+> :point_right: contact us to get url and credentials
 
 - Select your service detail
 

@@ -36,4 +36,5 @@ At first launch, you will be asked to input the `Deployment key` (the one you ha
 - [Stop/Start/Logs KYC Connect](./cli.md)
 - [Config your endpoints](./endpoints.md)
 - [Upgrade/Change version](./cli.md)
-- [Certificate](./certificate.md)
+- [Generate a Certificate](./certificate.md)
+- [Extract data by API](./api.md)

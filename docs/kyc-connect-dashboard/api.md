@@ -13,11 +13,17 @@ Make sure you have received your API key
 Retrieve current status of KYC application 
 
 ```` js
-curl -X GET \ https://<DASHBOARD_URL>/kyc/1.0/connect/applicants \
+curl -X GET \ https://<DASHBOARD_URL>/kyc/1.0/connect/<CLIENT_ID>/applicants/?<STATUS> \
   -H 'Authorization: <API_Key>' \
   -H 'Cache-Control: no-cache'
 
 ````
+Path paramaters: 
+  - STATUS (optional): Default value return all status. Possible values for specific filter (`waiting` | `inreview` | `approved`)
+  
+Query paramters:
+  - skip (optional) : Number of record skiped
+  - limit (optional) : Maximum of record return 
 
 returns the list of applicants and their current KYC statuses
 
@@ -25,12 +31,19 @@ returns the list of applicants and their current KYC statuses
 {
   "status": "success",
   "data": {
-    "status": "waiting", 
-    "_id": "5bbad529853cb200150fb78d",
-    "blockPassID": "5bbad527e37b52831146dae1",
-    "refId": "random-1538970917175"
-    },
-   {...}
+    "records": [
+      {
+        "status": "waiting",
+        "_id": "5bbad529853cb200150fb78d",
+        "blockPassID": "5bbad527e37b52831146dae1",
+        "refId": "random-1538970917175"
+      },
+      {...}
+    ],
+    "total": 2,
+    "skip": 0,
+    "limit": 5
+  }
 }
 ````
 

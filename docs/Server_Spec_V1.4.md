@@ -48,7 +48,7 @@
 
 ## Targets:
 This document gives a brief introduction on how to integrate your backend with Blockpass system.
-- First we introduce some [Blockpass APIs](#blockpass-api) (**yes, we provided these APIs**) which let Services create a user session, query user info and notice user when login/registration finishes.
+- First we introduce some [Blockpass APIs](#blockpass-api) (**yes, we provided these APIs**) which let Services create a user session, query user info and notify user when login/registration finishes.
 - Then we describe the [4 endpoints](#ii-service-endpoints) that **need to be implemented on Service backend**. 
 - The data structure for the 4 endpoints' request parameter and response can be found in the [final section](#iii-mobileapp-data-exchange).
 
@@ -213,8 +213,8 @@ Service side will need to give Blockpass team the list of required KYC fields th
 {
   noti: {
     type: 'info',
-    title,
-    mssg: msg
+    title: 'notification title',
+    mssg: 'notification message'
   }
 }
 ```
@@ -388,7 +388,7 @@ Example:
 ``` javascript
 {
     nextAction: 'upload',
-    accessToken: '...', // one-time password for update data
+    accessToken: '...', // one-time password for uploading data
     requiredFields: ['phone', 'email'], 
     certs: ['onfido']
 }
@@ -404,7 +404,7 @@ Example:
 
 ### 3. /uploadData: 
 **Purpose**: 
-* Mobile app checks for require fields, asks for User permission and upload data and certificate (optional)) to Service
+* Mobile app checks for required fields, asks for User permission and upload data and certificate (optional)) to Service
 
 **Method**: POST
 
@@ -444,7 +444,7 @@ Example:
 ``` javascript
 {
     nextAction: 'upload',
-    accessToken: '...', // one-time password for update data
+    accessToken: '...', // one-time password for uploading data
     requiredFields: ['phone', 'email'],
     certs: ['onfido']
 }
@@ -493,17 +493,17 @@ Object stored kycRecord status following Mobile App format
 
 `allowResubmit` (V1.3+): 
 
-| Status   | Descripton                                    |
+| Status   | Description                                    |
 | -------- | --------------------------------------------- |
 | True     | Mobile app will show Resubmit button if any identities / certificate change detected |
 | False    | 'Resubmit button now showed'. (Ex: during KYC profile underReview / approved )       |
 
 `KycRecordStatus.status` tables: 
 
-| Status   | Descripton                                    |
+| Status   | Description                                    |
 | -------- | --------------------------------------------- |
 | notFound | User has not registered with this Service     |
-| waiting  | Waiting for user data to upload completely    |
+| waiting  | Waiting for user data to be uploaded completely    |
 | inreview | User identity is in review                    |
 | approved | Review process is success, (Service may proceed to issue Certificate to User) |
 

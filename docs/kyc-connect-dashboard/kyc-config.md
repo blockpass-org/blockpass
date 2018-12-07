@@ -6,7 +6,7 @@
 
 - Select your service detail
 
-- At the bottom of the page,  press the `JSON Button`.  
+- At the bottom of the page, press the `JSON Button`.  
   A popup will show your service's `STANDALONE_CONFIG`
 
 ![StandaloneConfig](/docs/kyc-connect-dashboard/imgs/StandaloneConfig.png)

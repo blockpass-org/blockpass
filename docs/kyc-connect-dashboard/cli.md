@@ -2,20 +2,20 @@
 
 ## Stop the service
 
-  `./blockpass stop`
+`./blockpass stop`
 
 ## Start/restart the service
 
-  `./blockpass start`
+`./blockpass start`
 
 ## Display the logs
 
-  `./blockpass logs`
+`./blockpass logs`
 
 ## Ugrade
 
-  `./blockpass upgrade`
+`./blockpass upgrade`
 
-  Confirm and choose the version you want to use.
+Confirm and choose the version you want to use.
 
-  We recommend to use latest.
+We recommend to use latest.

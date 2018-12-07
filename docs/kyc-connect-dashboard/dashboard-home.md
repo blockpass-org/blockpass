@@ -20,7 +20,6 @@ At first launch, you will be asked to input the `Deployment key` (the one you ha
 
 > :point_right: contact us to get the `Deployment key`
 
-
 ![Step0](/docs/kyc-connect-dashboard/imgs/Step0.png)
 
 - Login using `admin` account to access Administrator Page

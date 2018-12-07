@@ -2,7 +2,8 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+**Table of Contents** _generated with [DocToc](https://github.com/thlorenz/doctoc)_
 
 - [Expected Outcome](#expected-outcome)
 - [Blockpass Mobile App <-> Our Server](#blockpass-mobile-app---our-server)
@@ -19,7 +20,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-This document target to build a service handle basic user case below following [Blockpass Server SpecV1](/docs/sdk/SpecV1/Server_Spec_V1.md)
+This document target to build a service handle basic use case following [Blockpass Server SpecV1](/docs/sdk/SpecV1/Server_Spec_V1.md)
 
 ## Expected Outcome
 
@@ -29,7 +30,7 @@ This document target to build a service handle basic user case below following [
 
    - Old User: Generate our `service_access_token` and return to website
 
-   - New user: Upload user data (email and selfe) from Mobile App -> our backend perform registration -> Generate our service `access_token` and return to website
+   - New user: Upload user data (email and selfie) from Mobile App -> our backend perform registration -> Generate our service `access_token` and return to website
 
 ## Blockpass Mobile App <-> Our Server
 
@@ -37,15 +38,15 @@ According to [Login sequence chart](/docs/sdk/SpecV1/Server_Spec_V1#4-mobile-app
 
 ### 1. POST `/status`
 
-Mobile app begin by query current status of user. It will give our backend `code` and `sessionCode` as paramaters:
+Mobile app begin by query current status of user. It will give our backend `code` and `sessionCode` as parameters:
 
-- `code`: Auth Code. Which our server using this to [bp-api-handshake](/docs/sdk/SpecV1/Server_Spec_V1#1-handshake.md) and [bp-api-queryBlockpassId](/docs/sdk/SpecV1/Server_Spec_V1#3-query-blockpassprofile.md) (Make sure that this request come from Blockpass mobile app)
+- `code`: Authorization Code. This code is needed in [bp-api-handshake](/docs/sdk/SpecV1/Server_Spec_V1#1-handshake.md) and [bp-api-queryBlockpassId](/docs/sdk/SpecV1/Server_Spec_V1#3-query-blockpassprofile.md) (Make sure that this request come from Blockpass mobile app)
 
-- `sessionCode`: Website session code. Which we can using [bp-api-sso-complete](/docs/sdk/SpecV1/Server_Spec_V1#4-single-sign-on-complete.md) to send our `service_access_token` back to website
+- `sessionCode`: Website session code. This session code can be used in [bp-api-sso-complete](/docs/sdk/SpecV1/Server_Spec_V1#4-single-sign-on-complete.md) to send our `service_access_token` back to website
 
 Request Payload Example:
 
-``` javascript
+```javascript
 {'sessionCode': '...', 'code': '.......'}
 ```
 
@@ -59,21 +60,21 @@ Request Payload Example:
 
 - **Old User**: Since this user already complete our registration process => We create our `service_access_token` and send back to Website via [bp-api-sso-complete](/docs/sdk/SpecV1/Server_Spec_V1#4-single-sign-on-complete.md)
 
-``` javascript
-{ 
-  identities: [ 
+```javascript
+{
+  identities: [
      { slug: 'email', status: 'approved' },
      { slug: 'selfie', status: 'approved' }
    ],
   certificates:[],
-  createdDate: 'ISO-Date-Format'
+  createdDate: 'ISO-Date-Format',
   status: 'approved'
 }
 ```
 
-- **New User**: This is not found user. We expect user provide`email` and `selfie` in order to sign-up
+- **New User**: We expect user provide `email` and `selfie` in order to sign-up
 
-``` javascript
+```javascript
 {
   identities: [
      { slug: 'email', status: '' },
@@ -90,7 +91,7 @@ In case user `notFound` returned by `/status` api. Blockpass Mobile App will cal
 
 Request Payload Example:
 
-``` javascript
+```javascript
 {'sessionCode': '...', 'code': '.......'}
 ```
 
@@ -104,12 +105,12 @@ Request Payload Example:
 
 Our Server Response:
 
-``` javascript
+```javascript
 {
     nextAction: 'upload', // action code for mobile app
-    accessToken: '...',   // one-time password for update data
+    accessToken: '...',   // one-time password for uploading data
 
-    // expected fileds and certificates
+    // expected fields and certificates
     requiredFields: ['phone', 'email'],
     certs: ['onfido']
 }
@@ -117,13 +118,13 @@ Our Server Response:
 
 ### 3. POST `/upload`
 
-Mobile app will collect Raw user data, certificate ( asking user permission ) and send request `/uploadData`. Of couse `one_time_pass` in step 1 attached for Authentication
+Mobile app will collect Raw user data, certificate ( asking user permission ) and send request `/uploadData`. `one_time_pass` in step 1 will be attached for Authentication
 
 This request body will be format with `multipart/form-data`
 
 Request Payload Example:
 
-``` text
+```text
 POST  HTTP/1.1
 Host: auth-blockpass.org
 Cache-Control: no-cache
@@ -158,7 +159,7 @@ Content-Type: image/svg+xml
 
 ### BasicAuth
 
-This is procedure to make sure that in-comming request come from Blockpass Mobile App.
+This is procedure to make sure that in-coming request come from Blockpass Mobile App.
 
 Input
 
@@ -178,7 +179,7 @@ Using `code` to obtain Blockpass token for services. Which can be use to query u
 
 - Body(application/json):
 
-``` javascript
+```javascript
 {
     "client_id": "developer_service",
     "client_secret": "developer_service",
@@ -189,12 +190,13 @@ Using `code` to obtain Blockpass token for services. Which can be use to query u
 ```
 
 - Response Code:
+
   - 200: Success
   - 400: Invalid code => Terminate request return error to client
 
 - Example Success Response
 
-``` javascript
+```javascript
 {
     "access_token" : "....",
     "expires_in" : 36000, // miliseconds
@@ -206,7 +208,7 @@ Using `code` to obtain Blockpass token for services. Which can be use to query u
 
 - Header:
 
-``` javascript
+```javascript
 {
     "Authorization": "{blockpass_token}"
 }
@@ -214,7 +216,7 @@ Using `code` to obtain Blockpass token for services. Which can be use to query u
 
 - Example Success Response
 
-``` javascript
+```javascript
 {
     "id" : "....",          // blockpassId
     // Please ignore others fields. in-development status
@@ -241,7 +243,7 @@ Output
 
 - Header:
 
-``` javascript
+```javascript
 {
     "Authorization": "{blockpass_token}"
 }
@@ -249,7 +251,7 @@ Output
 
 - Body(application/json):
 
-``` javascript
+```javascript
 {
     "result": "success",
     "custom_data": {
@@ -264,7 +266,7 @@ Output
 
 - Example Success Response
 
-``` javascript
+```javascript
 {
     "status": "success"
 }

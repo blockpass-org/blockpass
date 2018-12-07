@@ -55,7 +55,7 @@
 
   - `PN_GOOGLE_API_KEY`  
     Push notifications API key  
-    You can get it from [Google Firebase Console](https://console.firebase.google.com). Follow intructions [here](https://developer.clevertap.com/docs/find-your-fcm-sender-id-fcm-server-api-key#)
+    You can get it from [Google Firebase Console](https://console.firebase.google.com). Follow instructions [here](https://developer.clevertap.com/docs/find-your-fcm-sender-id-fcm-server-api-key#)
 
   - `PN_PUBLIC_VAPID_KEY`  
     Google VAPID public key. Follow instructions [here](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications#using_vapid) or [codelab online tool](https://web-push-codelab.glitch.me/)
@@ -69,7 +69,7 @@
 
   Certificate is digital document formatted as [json-ld](https://w3c-dvcg.github.io/ld-signatures/) and signed with ECDSA (Bitcoin key)
 
-  To configure a certicate, some extra settings are required on the `Developer Portal` [Guide Here](./certificate.md)
+  To configure a certificate, some extra settings are required on the `Developer Portal` [Guide Here](./certificate.md)
 
   To issue certificates, you need a ECDSA Key pair
 

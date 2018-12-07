@@ -1,6 +1,7 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents** 
+
+**Table of Contents**
 
 - [Targets:](#targets)
 - [Prerequisites](#prerequisites)
@@ -32,13 +33,17 @@
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Targets:
+
 This document gives a brief introduction on how to integrate your backend with Blockpass system.
-- First we introduce some [Blockpass APIs](#blockpass-api) (**yes, we provided these APIs**) which let Services create a user session, query user info and notice user when login/registration finishes.
-- Then we describe the [4 endpoints](#ii-service-endpoints) that **need to be implemented on Service backend**. 
+
+- First we introduce some [Blockpass APIs](#blockpass-api) (**yes, we provided these APIs**) which let Services create a user session, query user info and notify user when login/registration finished.
+- Then we describe the [4 endpoints](#ii-service-endpoints) that **need to be implemented on Service backend**.
 - The data structure for the 4 endpoints' request parameter and response can be found in the [final section](#iii-mobileapp-data-exchange).
 
 ## Prerequisites
+
 Service backend will need following information to connect with Blockpass APIs:
+
 - `$CLIENT_ID`: ID for Service
 - `$CLIENT_SECRET`: secret key used to generate handshake session
 - `$BASE_URL`: base url to request Blockapss APIs (Blockpass APIs Host)
@@ -47,31 +52,35 @@ At the moment these information will be provided directly from Blockpass team. L
 
 Service side will need to give Blockpass team the list of required KYC fields that they want User to provide (eg name, dob, selfie, Onfido certificate etc...)
 
-
 ## I. Blockpass API
 
 ### 1. Handshake
 
-**Purpose**: 
-* Authorize with Blockpass server (using `auth code` provided by mobile app). If this code is correct Blockpass server will return `BlockpassToken`
+**Purpose**:
+
+- Authorize with Blockpass server (using `auth code` provided by mobile app). If this code is correct Blockpass server will return `BlockpassToken`
 
 **Endpoint**: `/api/v0.3/oauth2/token`
 
 **Method**: POST
 
 **Header**:
-* Content-Type: application/json
+
+- Content-Type: application/json
 
 **Body(json)**:
-* client_id: `$CLIENT_ID`
-* client_secret: `$CLIENT_SECRET`
-* code: Blockpass Mobile auth code
-* grant_type: must be `authorizationcode`
-* session_code (optional): SSO SessionCode
 
-**Response**: 
-* **BlockpassToken** (JSON):
-``` javascript
+- client_id: `$CLIENT_ID`
+- client_secret: `$CLIENT_SECRET`
+- code: Blockpass Mobile auth code
+- grant_type: must be `authorizationcode`
+- session_code (optional): SSO SessionCode
+
+**Response**:
+
+- **BlockpassToken** (JSON):
+
+```javascript
 {
     "access_token" : "....",
     "expires_in" : 36000, // miliseconds
@@ -81,21 +90,25 @@ Service side will need to give Blockpass team the list of required KYC fields th
 
 ### 2. Refresh AccessToken
 
-**Purpose**: 
-* Re-issue a new `BlockpassToken`
+**Purpose**:
+
+- Re-issue a new `BlockpassToken`
 
 **Endpoint**: `/api/v0.3/service/renewStoc`
 
 **Method**: POST
 
 **Body(json)**:
-* stoc: `BlockpassToken.access_token`
-* stoc_refresh: `BlockpassToken.refresh_token`
-* client_secret: `$CLIENT_SECRET`
 
-**Response**: 
-* Renew **BlockpassToken** (JSON):
-``` javascript
+- stoc: `BlockpassToken.access_token`
+- stoc_refresh: `BlockpassToken.refresh_token`
+- client_secret: `$CLIENT_SECRET`
+
+**Response**:
+
+- Renew **BlockpassToken** (JSON):
+
+```javascript
 {
     "access_token" : "....",
     "expires_in" : 36000, // miliseconds
@@ -105,20 +118,24 @@ Service side will need to give Blockpass team the list of required KYC fields th
 
 ### 3. Query BlockpassProfile
 
-**Purpose**: 
-* Query User Blockpass Profile, requires a `BlockpassToken`
+**Purpose**:
+
+- Query User Blockpass Profile, requires a `BlockpassToken`
 
 **Endpoint**: `/api/v0.3/oauth2/profile`
 
 **Method**: POST
 
 **Header**:
-* Content-Type: application/json
-* Authorization: `BlockpassToken.access_token`
 
-**Response**: 
-* **KycProfile** (JSON):
-``` javascript
+- Content-Type: application/json
+- Authorization: `BlockpassToken.access_token`
+
+**Response**:
+
+- **KycProfile** (JSON):
+
+```javascript
 {
     "id" : "....",          // BlockpassProfileId
     // Please ignore others fields. in-development status
@@ -127,33 +144,39 @@ Service side will need to give Blockpass team the list of required KYC fields th
 
 ### 4. Single Sign on Complete
 
-**Purpose**: 
-* Single Sign-on completes with Service's `extraData`. Browser will receive that `extraData` via WebSdk
+**Purpose**:
+
+- Single Sign-on completes with Service's `extraData`. Browser will receive that `extraData` via WebSdk
 
 **Endpoint**: `/api/v0.3/service/complete/`
 
 **Method**: POST
 
 **Header**:
-* Content-Type: application/json
-* Authorization: `BlockpassToken.access_token`
+
+- Content-Type: application/json
+- Authorization: `BlockpassToken.access_token`
 
 **Body(json)**:
-* result: should be `success` of `failed`
-* custom_data: Json Object as String
-``` javascript
+
+- result: should be `success` of `failed`
+- custom_data: Json Object as String
+
+```javascript
 {
-    session_Code, // SSO Session code
-    extraData     // Custom data forward to web-browser
+  session_Code, // SSO Session code
+    extraData // Custom data forward to web-browser
 }
 ```
 
-**Response**: 
-* **KycProfile** (JSON):
-``` javascript
+**Response**:
+
+- **KycProfile** (JSON):
+
+```javascript
 {
     "id" : "....",          // BlockpassProfileId
-        
+
     // Please ignore others fields. in-development status
 }
 ```
@@ -161,35 +184,39 @@ Service side will need to give Blockpass team the list of required KYC fields th
 ### 4. Send user online push-notification
 
 **Purpose**:
-* Service use this endpoint to send Online push notification (PN) to user
+
+- Service use this endpoint to send Online push notification (PN) to user
 
 **Endpoint**: `/api/v0.3/certificate_new/feedBack`
 
 **Method**: POST
 
 **Header**:
-* Content-Type: application/json
-* Authorization: `BlockpassToken.access_token`
+
+- Content-Type: application/json
+- Authorization: `BlockpassToken.access_token`
 
 **Body(json)**:
 
-* noti.type: should be 'info' (reserved for future use)
-* noty.title: Title of PN message
-* noty.mssg: Body of PN message
+- noti.type: should be 'info' (reserved for future use)
+- noty.title: Title of PN message
+- noty.mssg: Body of PN message
 
-``` javascript
+```javascript
 {
   noti: {
     type: 'info',
-    title,
-    mssg: msg
+    title: 'notification title',
+    mssg: 'notification message'
   }
 }
 ```
 
 **Response**:
-* (JSON):
-``` javascript
+
+- (JSON):
+
+```javascript
 {
     "status" : "success",          // BlockpassProfileId
 }
@@ -198,11 +225,12 @@ Service side will need to give Blockpass team the list of required KYC fields th
 ## II. Certificate Format
 
 - Certificate are digital documents, signed by two organizations:
+
   1. Issuer: the Service issuing the certificate
   2. Blockpass: countersigning the certificate
 
 - Certificate stored in [JSON-LD format 1.1](https://json-ld.org/spec/latest/json-ld/)
-- Certificate signing implementation follows [ld-signature](https://w3c-dvcg.github.io/ld-signatures/)`EcdsaKoblitzSignature2016` 
+- Certificate signing implementation follows [ld-signature](https://w3c-dvcg.github.io/ld-signatures/)`EcdsaKoblitzSignature2016`
 - Certificate signature is using [ld-signature-chain](https://w3c-dvcg.github.io/ld-signatures/#signature-chains)
 - Certificate includes 4 main parts:
   1. Entity: Json object storing hash of identities fields
@@ -213,7 +241,7 @@ Service side will need to give Blockpass team the list of required KYC fields th
 
 - Example Standard Certificate:
 
-``` javascript
+```javascript
 {
 
   // Json-Ld context
@@ -271,36 +299,39 @@ Service side will need to give Blockpass team the list of required KYC fields th
 }
 ```
 
-
-
 ## III. Service Endpoints
 
 ### 1. /status
-**Purpose**: 
 
-* Mobile app communicates with Service to query user [KycRecordStatus](#1-kycrecordstatus) status
+**Purpose**:
+
+- Mobile app communicates with Service to query user [KycRecordStatus](#1-kycrecordstatus) status
 
 **Method**: POST
 **Header**:
-* Content-Type: application/json
+
+- Content-Type: application/json
 
 **Body(json)**:
-* code: `auth code`
-* sessionCode (optional): SSO Session Code
 
+- code: `auth code`
+- sessionCode (optional): SSO Session Code
 
 **Response(json)**:
-* [KycRecordStatus](#1-kycrecordstatus)
 
-**Suggested Flow**: 
+- [KycRecordStatus](#1-kycrecordstatus)
+
+**Suggested Flow**:
+
 1. [Handshake](#1-handshake) using mobile provided `auth code` -> **BlockpassToken**
-2. [Query BlockpassProfile](#3-query-blockpassprofile) -> Get **BlockpassProfileId** 
-3. Query Your database and generate  [KycRecordStatus](#1-kycrecordstatus) => Return to client
+2. [Query BlockpassProfile](#3-query-blockpassprofile) -> Get **BlockpassProfileId**
+3. Query Your database and generate [KycRecordStatus](#1-kycrecordstatus) => Return to client
 4. Generate SSOPayload and forward to [Single Sign on Complete](#single-sign-on-complete) (optional if sessionCode existed )
 
 Example:
-``` javascript
-//New user record status 
+
+```javascript
+//New user record status
 {
     status: 'notFound',
     message: 'welcome new user. We need below info to continue registration',
@@ -310,7 +341,7 @@ Example:
     ]
 }
 
-//Existing user record status 
+//Existing user record status
 {
     status: 'waiting|inreview|approved',
     message: 'summary text',
@@ -326,105 +357,122 @@ Example:
 ```
 
 ### 2. /register and /login
-**Purpose**: 
 
-* Mobile app calls to start registration / login process. Service should return `nextAction` to instruct Mobile app what it should do next
-    * `nextAction`: What client should do next:
-      * *none*: do nothing
-      * *upload*: perform user's data upload (following fields below required)
-    * `accessToken`: one-time password using for next action `/uploadData`
-    * `requiredFields`: Required Identity fields user must provide
-    * `certs`: certificate that Services expects from User **(optional, User can choose whether to send or not)**
-
-* Note: 
-    * More information on `requiredFields` & `certs` can be found in section [Fields and Certificates](#1-available-identities-and-certificates)
-    * `requiredFields` and `certs` list must be approved by Blockpass. If not Mobile application will **decline sending those data to Service**.
-    * `/register` will be called when User presses Register on Mobile App. **sessionCode is not included in the request**.
-    * `/login` will be called when Mobile App consumes QR code via Website. 
-
-**Method**: POST
-
-**Header**:
-* Content-Type: application/json
-
-**Body(json)**:
-* code: `auth code`
-* sessionCode (optional) : SSO Session Code
-
-**Response(json)**:
-``` javascript
-{
-    nextAction: 'upload',
-    accessToken: '...', // one-time password for update data
-    requiredFields: ['phone', 'email'], 
-    certs: ['onfido']
-}
-```
-
-**Suggested FLow**: 
-1. [Handshake](#1-handshake) using Mobile's `auth code` -> **BlockpassToken**
-2. [Query BlockpassProfile](#3-query-blockpassprofile) -> Get **BlockpassProfileId** 
-3. Generate SSOPayload and forward to [Single Sign on Complete](#single-sign-on-complete) (optional if sessionCode is existed AND Profile is in good status)
-4. Query Your database and generate  [KycRecordStatus](#1-kycrecordstatus) => Base on that status. Generate submit data session: 
-    * accessToken: one-time password for next `uploadData` session 
-    * requiredFields, certs: List of fields or certificate Service needs user to provide
-
-### 3. /uploadData: 
-**Purpose**: 
-* Mobile app checks for require fields, asks for User permission and upload data and certificate (optional)) to Service
-
-**Method**: POST
-
-**Header**:
-* Content-Type: multipart/form-data
-
-**Body(multipart/form-data)**:
-* [Multipart-UploadData](#2-multipart-uploaddata)
-
-**Response(json)**:
-``` javascript
-{
-    nextAction: 'none', // Finish
-}
-```
-
-**Suggested Flow**: 
-1. Check `accessToken` and restore uploadData session. Which created above on `/login` or `/register` endpoints
-2. Consume User raw-data 
-3. Generate SSOPayload and forward to [Single Sign on Complete](#single-sign-on-complete) (optional if sessionCode existed from uploadData session - redirect from `/login` )
-
-### 4. /resubmit:
 **Purpose**:
-* Mobile app(1.3+) detect user identities change / missing (compare with latest data submited to service). If any change detected. Button *ReSubmit* will show allow user update those changes to services
+
+- Mobile app calls to start registration / login process. Service should return `nextAction` to instruct Mobile app what it should do next
+
+  - `nextAction`: What client should do next:
+    - _none_: do nothing
+    - _upload_: perform uploading user data (following fields below required)
+  - `accessToken`: one-time password using for next action `/uploadData`
+  - `requiredFields`: Required Identity fields user must provide
+  - `certs`: certificate that Services expects from User **(optional, User can choose whether to send or not)**
+
+- Note:
+  - More information on `requiredFields` & `certs` can be found in section [Fields and Certificates](#1-available-identities-and-certificates)
+  - `requiredFields` and `certs` list must be approved by Blockpass. If not Mobile application will **decline sending those data to Service**.
+  - `/register` will be called when User presses Register on Mobile App. **sessionCode is not included in the request**.
+  - `/login` will be called when Mobile App consumes QR code via Website.
 
 **Method**: POST
 
 **Header**:
-* Content-Type: application/json
+
+- Content-Type: application/json
 
 **Body(json)**:
-* code: `auth code`
-* fieldList: [string]. List of identities changed
-* certList: [string]. List of certificate changed
+
+- code: `auth code`
+- sessionCode (optional) : SSO Session Code
 
 **Response(json)**:
-``` javascript
+
+```javascript
 {
     nextAction: 'upload',
-    accessToken: '...', // one-time password for update data
+    accessToken: '...', // one-time password for uploading data
     requiredFields: ['phone', 'email'],
     certs: ['onfido']
 }
 ```
 
-**Suggested Flow**: 
-1. [Handshake](#1-handshake) using Mobile's `auth code` -> **BlockpassToken**
-2. [Query BlockpassProfile](#3-query-blockpassprofile) -> Get **BlockpassProfileId** 
-3. Check current KycStatus dose it allow user reSubmit data ( if not return `nextAction: 'none'`)
-4. Generate submit data session:  
-    * accessToken: one-time password for next `uploadData` session 
-    * requiredFields, certs: List of fields and certificate Service want consumed from user
+**Suggested FLow**:
 
+1. [Handshake](#1-handshake) using Mobile's `auth code` -> **BlockpassToken**
+2. [Query BlockpassProfile](#3-query-blockpassprofile) -> Get **BlockpassProfileId**
+3. Generate SSOPayload and forward to [Single Sign on Complete](#single-sign-on-complete) (optional if sessionCode is existed AND Profile is in good status)
+4. Query Your database and generate [KycRecordStatus](#1-kycrecordstatus) => Base on that status. Generate submit data session:
+   - accessToken: one-time password for next `uploadData` session
+   - requiredFields, certs: List of fields or certificate Service needs user to provide
+
+### 3. /uploadData:
+
+**Purpose**:
+
+- Mobile app checks for require fields, asks for User permission and upload data and certificate (optional)) to Service
+
+**Method**: POST
+
+**Header**:
+
+- Content-Type: multipart/form-data
+
+**Body(multipart/form-data)**:
+
+- [Multipart-UploadData](#2-multipart-uploaddata)
+
+**Response(json)**:
+
+```javascript
+{
+    nextAction: 'none', // Finish
+}
+```
+
+**Suggested Flow**:
+
+1. Check `accessToken` and restore uploadData session. Which created above on `/login` or `/register` endpoints
+2. Consume User raw-data
+3. Generate SSOPayload and forward to [Single Sign on Complete](#single-sign-on-complete) (optional if sessionCode existed from uploadData session - redirect from `/login` )
+
+### 4. /resubmit:
+
+**Purpose**:
+
+- Mobile app(1.3+) detect user identities change / missing (compare with latest data submited to service). If any change detected. Button _ReSubmit_ will show to allow user update those changes to services
+
+**Method**: POST
+
+**Header**:
+
+- Content-Type: application/json
+
+**Body(json)**:
+
+- code: `auth code`
+- fieldList: [string]. List of identities changed
+- certList: [string]. List of certificate changed
+
+**Response(json)**:
+
+```javascript
+{
+    nextAction: 'upload',
+    accessToken: '...', // one-time password for uploading data
+    requiredFields: ['phone', 'email'],
+    certs: ['onfido']
+}
+```
+
+**Suggested Flow**:
+
+1. [Handshake](#1-handshake) using Mobile's `auth code` -> **BlockpassToken**
+2. [Query BlockpassProfile](#3-query-blockpassprofile) -> Get **BlockpassProfileId**
+3. Check current KycStatus dose it allow user reSubmit data ( if not return `nextAction: 'none'`)
+4. Generate submit data session:
+   - accessToken: one-time password for next `uploadData` session
+   - requiredFields, certs: List of fields and certificate Service want consumed from user
 
 ## III. MobileApp Data Exchange:
 
@@ -432,7 +480,7 @@ Example:
 
 Object stored kycRecord status following Mobile App format
 
-``` javascript
+```javascript
 // Format
 {
     status: 'notFound|waiting|inreview|approved',
@@ -458,27 +506,27 @@ Object stored kycRecord status following Mobile App format
 }
 ```
 
-`allowResubmit` (V1.3+): 
+`allowResubmit` (V1.3+):
 
-| Status   | Descripton                                    |
-| -------- | --------------------------------------------- |
-| True     | Mobile app will show Resubmit button if any identities / certificate change detected |
-| False    | 'Resubmit button now showed'. (Ex: during KYC profile underReview / approved )       |
+| Status | Description                                                                          |
+| ------ | ------------------------------------------------------------------------------------ |
+| True   | Mobile app will show Resubmit button if any identities / certificate change detected |
+| False  | 'Resubmit button now showed'. (Ex: during KYC profile underReview / approved )       |
 
-`KycRecordStatus.status` tables: 
+`KycRecordStatus.status` tables:
 
-| Status   | Descripton                                    |
-| -------- | --------------------------------------------- |
-| notFound | User has not registered with this Service     |
-| waiting  | Waiting for user data to upload completely    |
-| inreview | User identity is in review                    |
+| Status   | Description                                                                   |
+| -------- | ----------------------------------------------------------------------------- |
+| notFound | User has not registered with this Service                                     |
+| waiting  | Waiting for user data to upload completely                                    |
+| inreview | User identity is in review                                                    |
 | approved | Review process is success, (Service may proceed to issue Certificate to User) |
 
 State Transition:
 
 ![State Transition](/docs/sdk/img/status-transition.png)
 
-``` mermaid
+```mermaid
 graph LR
     NotFound --> Waiting
     Waiting --> |Operator Begin Review|InReview
@@ -488,24 +536,21 @@ graph LR
 
 ```
 
-
 `KycRecordStatus.Identities.status` tables:
 
-| Status   | (Identities or Certificate).status | Description             |
-| -------- | ---------------------------------- | ------------------------|
-| notFound | empty        | User has not registered with this Service     |
-| waiting  | received     | User data has been successfully uploaded      |
-|          | missing      | User data corrupts (mostly by network problem in previous upload session)         |
-| inreview |              | User identity is in review process            |
-|          | rejected     | User identity is rejected. Notice user to reupload. In this case Service must provide reason in `KycRecordStatus.Identities.comment` field |
-|          | approved     | User identity is accepted                     |
-| approved | *            | Review process is done (Service may proceed to issue Certificate for User)                            |
-
+| Status   | (Identities or Certificate).status | Description                                                                                                                                               |
+| -------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| notFound | empty                              | User has not registered with this Service                                                                                                                 |
+| waiting  | received                           | User data has been successfully uploaded                                                                                                                  |
+|          | missing                            | User data corrupts (mostly by network problem in previous upload session)                                                                                 |
+| inreview |                                    | User identity is in review process                                                                                                                        |
+|          | rejected                           | User identity is rejected. Notify user to re-upload identity data. In this case Service must provide reason in `KycRecordStatus.Identities.comment` field |
+|          | approved                           | User identity is accepted                                                                                                                                 |
+| approved | \*                                 | Review process is done (Service may proceed to issue Certificate for User)                                                                                |
 
 ### 2. Multipart-UploadData
 
-
-``` 
+```
 POST  HTTP/1.1
 Host: auth-blockpass.org
 Cache-Control: no-cache
@@ -534,21 +579,21 @@ Content-Type: image/svg+xml
 
 #### 3.1 Identities Slug
 
-| Name              | Type          | Description |
-| --------          | --------      | ----------- |
-| email             | String        | Email       |
-| family_name       | String        | Family name       |
-| given_name        | String        | Given name       |
-| phone             | String        | Mobile Phone number       |
-| selfie            | Binary        | Selfie images       |
-| passport          | Binary        | Passport images       |
-| proof_of_address  | Binary        | Proof of address image       |
-| dob               | String        | Birthday       |
-| address           | Json String   | Address     |
+| Name             | Type        | Description            |
+| ---------------- | ----------- | ---------------------- |
+| email            | String      | Email                  |
+| family_name      | String      | Family name            |
+| given_name       | String      | Given name             |
+| phone            | String      | Mobile Phone number    |
+| selfie           | Binary      | Selfie images          |
+| passport         | Binary      | Passport images        |
+| proof_of_address | Binary      | Proof of address image |
+| dob              | String      | Birthday               |
+| address          | Json String | Address                |
 
 Example:
 
-``` javascript
+```javascript
 {
     "identities" : {
     "address" : '{"address":"Street","extraInfo":"Addition info","city":"City","state":"AL","postalCode":"700000","country":"USA"}',
@@ -566,14 +611,14 @@ Example:
 
 #### 3.1.1 Address Json format (V1.3+)
 
-| Name              | Type          | Description    |
-| --------          | --------      | -----------    |
-| address           | String        | Address line 1 |
-| extraInfo         | String        | Additional info about user address |
-| city              | String        | City info |
-| state (optional)  | String        | State (depend on country) |
-| postalCode        | String        | Postal code |
-| country           | String        | ISO(3 letter) country code |
+| Name             | Type   | Description                        |
+| ---------------- | ------ | ---------------------------------- |
+| address          | String | Address line 1                     |
+| extraInfo        | String | Additional info about user address |
+| city             | String | City info                          |
+| state (optional) | String | State (depend on country)          |
+| postalCode       | String | Postal code                        |
+| country          | String | ISO(3 letter) country code         |
 
 Ref:
 
@@ -581,20 +626,20 @@ Ref:
 
 #### 3.1.2 Phone Json format (V1.3+)
 
-| Name              | Type          | Description    |
-| --------          | --------      | -----------    |
-| phoneNumber       | String        | Phone number with country code prefix (`+<code><number>`) |
-| number            | String        | Phone number without country code prefix |
-| countryCode2      | String        | ISO(2 letter) country code |
-| countryCode       | String        | ISO(3 letter) country code |
+| Name         | Type   | Description                                               |
+| ------------ | ------ | --------------------------------------------------------- |
+| phoneNumber  | String | Phone number with country code prefix (`+<code><number>`) |
+| number       | String | Phone number without country code prefix                  |
+| countryCode2 | String | ISO(2 letter) country code                                |
+| countryCode  | String | ISO(3 letter) country code                                |
 
 #### 3.2 Certificate Slug
 
-| Name                        | Type          | Description |
-| ------------------------    | --------      | ----------- |
-| onfido                      | String        | Onfido certificate (deprecated)       |
-| onfido-service-cert         | String        | Onfido certificate (standard format)       |
-| complyadvantage-service-cert| String        | Onfido certificate (standard format)               |
+| Name                         | Type   | Description                          |
+| ---------------------------- | ------ | ------------------------------------ |
+| onfido                       | String | Onfido certificate (deprecated)      |
+| onfido-service-cert          | String | Onfido certificate (standard format) |
+| complyadvantage-service-cert | String | Onfido certificate (standard format) |
 
 #### 3.3 onfido-service-cert (Version 1.2+)
 
@@ -602,23 +647,23 @@ Ref:
 
 - `Claim._customFields.result`: Onfido summary result
 
-| Name  | Description |
-| ----  | ----------- |
-| clear | Data sent to Onfido are clear and match with other data. Passport seems to be valid and was not stolen. |
-| consider | Some verification results returned errors. Check details of results for more informations.   |
+| Name     | Description                                                                                             |
+| -------- | ------------------------------------------------------------------------------------------------------- |
+| clear    | Data sent to Onfido are clear and match with other data. Passport seems to be valid and was not stolen. |
+| consider | Some verification results returned errors. Check details of results for more information.               |
 
-- `Claim._customFields.sub_result`: Onfido detailled result
+- `Claim._customFields.sub_result`: Onfido detailed result
 
-| Name  | Description |
-| ----  | ----------- |
-| clear | If all underlying verifications pass, the overall sub result will be clear |
-| rejected | If the report has returned information where the check cannot be processed further (poor quality image or an unsupported document).            |
-| suspected | If the document that is analysed is suspected to be fraudulent.            |
-| caution | If any other underlying verifications fail but they don’t necessarily point to a fraudulent document (such as the name provided by the applicant doesn’t match the one on the document)            |
+| Name      | Description                                                                                                                                                                             |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| clear     | If all underlying verifications pass, the overall sub result will be clear                                                                                                              |
+| rejected  | If the report has returned information where the check cannot be processed further (poor quality image or an unsupported document).                                                     |
+| suspected | If the document that is analysed is suspected to be fraudulent.                                                                                                                         |
+| caution   | If any other underlying verifications fail but they don’t necessarily point to a fraudulent document (such as the name provided by the applicant doesn’t match the one on the document) |
 
 Example:
 
-``` javascript
+```javascript
 {
   "signature": [
     {
@@ -779,17 +824,15 @@ Example:
 - This certificate contains results from a Comply Advantage check (documentation not public)
 - `Claim._customFields.result`: Comply Advantage summary result
 
-| Name  | Description |
-| ----  | ----------- |
-| unknown | Name not found in Sanctions and PEP list. |
-| no_match | Name not found in Sanctions and PEP list. |
-| potential_match | Potential match found in Sanctions and PEP list. |
-| false_positive | False positive found in Sanctions and PEP list. |
-| true_positive | True positive found in Sanctions and PEP list.   |
-| true_positive_apprrove | True positive found in Sanctions and PEP list.   |
-| true_positive_reject | True positive found in Sanctions and PEP list.   |
-
-
+| Name                  | Description                                      |
+| --------------------- | ------------------------------------------------ |
+| unknown               | Name not found in Sanctions and PEP list.        |
+| no_match              | Name not found in Sanctions and PEP list.        |
+| potential_match       | Potential match found in Sanctions and PEP list. |
+| false_positive        | False positive found in Sanctions and PEP list.  |
+| true_positive         | True positive found in Sanctions and PEP list.   |
+| true_positive_approve | True positive found in Sanctions and PEP list.   |
+| true_positive_reject  | True positive found in Sanctions and PEP list.   |
 
 #### 3.5 onfido (Before Version 1.2) [deprecated]
 
@@ -797,7 +840,7 @@ Example:
 
 - Onfido check results are similar to [onfido-service-cert](#31-onfido-service-cert-version-12)
 
-``` javascript
+```javascript
 {
   "@context": {
     //...
@@ -833,7 +876,7 @@ Example:
 
 ![Mobile app register](/docs/sdk/img/mobile-app-endpoints.png)
 
-``` mermaid
+```mermaid
 graph LR
 A[/status] -->|notFound| B{qr.session_code?}
 B --> |yes|C[/login]

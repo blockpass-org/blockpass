@@ -1,5 +1,6 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 **Table of Contents**
 
 - [Target](#target)
@@ -19,7 +20,9 @@
 This document gives a brief introduction on how to integrate your front-end (Web or Mobile App) with Blockpass system.
 
 ## Prerequisites
+
 Service front-end will need following information to connect with Blockpass APIs:
+
 - `$CLIENT_ID`: ID for Service
 - `$BASE_URL`: base url to request Blockapss APIs
 
@@ -27,29 +30,31 @@ At the moment these information will be provided directly from Blockpass team. L
 
 Service side will need to give Blockpass team the list of required KYC fields that they want User to provide (eg name, dob, selfie, Onfido certificate etc...)
 
-Service side will need to implement Server Sepcification along with this document 
-
+Service side will need to implement Server Specification along with this document
 
 # Client Blockpass APIs
 
 ## 1. Create SSO SessionCode
 
-**Purpose**: 
-* Client creates new SSO session. Depend on target platform one of following case may apply:
-    * Web platform: Website generates a [QR code](#QRCode-format) so User can scan with Blockpass mobile app
-    * Mobile platform: generate an [App-link](#App-link-Format) parameter for Blockpass mobile app, so that Service mobile application can be invoked when registration/login process is done
+**Purpose**:
 
+- Client creates new SSO session. Depend on target platform one of following case may apply:
+  - Web platform: Website generates a [QR code](#QRCode-format) so User can scan with Blockpass mobile app
+  - Mobile platform: generate an [App-link](#App-link-Format) parameter for Blockpass mobile app, so that Service mobile application can be invoked when registration/login process is done
 
 **Endpoint**: `/api/v0.3/service/register/${clientId}`
 
 **Method**: POST
 
 **Header**:
-* Content-Type: application/json
 
-**Response**: 
-* **BlockpassToken** (JSON):
-``` javascript
+- Content-Type: application/json
+
+**Response**:
+
+- **BlockpassToken** (JSON):
+
+```javascript
 {
   "status": "success",
   "session": "b052cb34-faed-47b4-b1bb-ac38c718eace"
@@ -58,21 +63,25 @@ Service side will need to implement Server Sepcification along with this documen
 
 ## 2. Query status of SessionCode
 
-**Purpose**: 
-* Monitor a session status with `SessionCode`
+**Purpose**:
+
+- Monitor a session status with `SessionCode`
 
 **Endpoint**: `/api/v0.3/service/register/${session}`
 
 **Method**: GET
 
 **Header**:
-* Content-Type: application/json
 
-**Response**: 
-* [SessionCodeStatus](#SessionCodeStatus) (JSON):
+- Content-Type: application/json
+
+**Response**:
+
+- [SessionCodeStatus](#SessionCodeStatus) (JSON):
 
 Example
-``` javascript
+
+```javascript
 {
   "status": "success", // created|processing|success|failed
   "extraData": {
@@ -86,11 +95,11 @@ Example
 
 # MobileApp Data Exchange
 
-## QRCode format 
+## QRCode format
 
 Website displays QRCode containing data in JSON format below in order for the Mobile application to perform SSO
 
-``` javascript
+```javascript
 {
   "clientId": "...",
   "session": "b052cb34-faed-47b4-b1bb-ac38c718eace"
@@ -99,30 +108,30 @@ Website displays QRCode containing data in JSON format below in order for the Mo
 
 ## SessionCodeStatus
 
-Session Code Status returned by Blockpass Apis. 
+Session Code Status returned by Blockpass Apis.
 
 Note:
-* When SessionCode change to state `processing`. QRCode will not be accepted by MobileApp anymore. **Client must request new session in case previous login attempt fails**
+
+- When SessionCode change to state `processing`. QRCode will not be accepted by MobileApp anymore. **Client must request new session in case previous login attempt fails**
 
 Example
-``` javascript
+
+```javascript
 {
-  "status": "created", 
+  "status": "created",
   "extraData": ""
 }
 ```
 
 Status:
 
-| status      | Description 
-| --------    | --------
-| created     | SSO session created
-| processing  | SSO consumed by Mobile app. Data exchange between Mobile app and Service endpoints is in progress
-| success     | SSO session processing complete
-| failed      | SSO session processing failed
+| status     | Description                                                                                       |
+| ---------- | ------------------------------------------------------------------------------------------------- |
+| created    | SSO session created                                                                               |
+| processing | SSO consumed by Mobile app. Data exchange between Mobile app and Service endpoints is in progress |
+| success    | SSO session processing complete                                                                   |
+| failed     | SSO session processing failed                                                                     |
 
+## App-link Format
 
-
-
-## App-link Format 
 To be update in V2

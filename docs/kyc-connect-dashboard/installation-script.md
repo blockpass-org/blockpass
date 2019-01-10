@@ -22,7 +22,8 @@
 
   - `Standalone configuration`  
     Auto configuration string that you can get from the Developer Portal. 
-    > :point_right: contact us to get this parameter
+    > :point_right: contact us to get this parameter.   
+
     If you have access to developer portal, follow instructions [here](./kyc-config.md) to get the parameter.
 
     It includes your `service name`, your `clientId`, your `clientSecret`, the `status` of the service (active or inactive) and the `images` paths your have configured.

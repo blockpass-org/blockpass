@@ -13,7 +13,7 @@ Make sure you have received your API key
 Retrieve current status of KYC application 
 
 ```` js
-curl -X GET \ https://<DASHBOARD_URL>/kyc/1.0/connect/<CLIENT_ID>/applicants/?<STATUS> \
+curl -X GET \ https://<DASHBOARD_URL>/kyc/1.0/connect/<CLIENT_ID>/applicants/<STATUS> \
   -H 'Authorization: <API_Key>' \
   -H 'Cache-Control: no-cache'
 

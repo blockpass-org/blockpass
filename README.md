@@ -3,7 +3,7 @@
 
 Blockpass offers 2 ways of integration for Merchants
 
-  * [using our SDKs](/docs/sdk.md) (will be depracted soon)
+  * [using our SDKs](/docs/sdk.md) (will be deprecated soon)
     + integrates with your own platform and workflow
     + immediate access to data
     + customizable

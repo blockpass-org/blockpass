@@ -7,6 +7,10 @@
 * few coding required
 * provides API to retrieve data
 
+## Overview
+
+![Overview](/docs/kyc-connect-dashboard/imgs/Flowchart.png)
+
 ## Sandbox environment
 
 * [Test our KYC Connect Dashboard before installation](/docs/kyc-connect-dashboard/dashboard-home-staging.md)

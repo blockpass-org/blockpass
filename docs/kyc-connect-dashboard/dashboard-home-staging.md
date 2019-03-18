@@ -8,7 +8,7 @@ Test our KYC Connect Dashboard before installation
 Download blockpass mobile application (staging version) from
 
 * `Testflight`: to test with an iPhone  
-  Click here to download the staging app:  https://testflight.apple.com/join/JavudHsa
+  Open this link in Safari iPhone to join test app in Testflight:  https://testflight.apple.com/join/JavudHsa
 
 * `Google Play`: to test with an Android  
 Click here to download the staging app: https://play.google.com/apps/testing/com.blockpass_mobile.staging 
@@ -23,14 +23,12 @@ Required fields
 - name
 - DoB
 - Passport
-- Phone number
 
 Submit to Passport Authentication verifier.
 
 Notes:   
 - Checks are not real. Results are always the same whatever data are submitted.  
 - Please do not submit real passport picture.  
-- You can upload any picture but it must include at least a face (otherwise it will get rejected).
 
 
 ### 2. Get a AML certificate
@@ -39,6 +37,15 @@ Required
 - DoB
 
 Submit to Sanction List and PEP check verifier
+
+### 3. Get a Face Match certificate
+
+Required 
+- Passport
+- Selfie
+
+Submit to Face Match verifier
+
 
 ## C. QR code scanning
 
@@ -49,7 +56,7 @@ Once both certificates are received, on your desktop, go to this url to access t
 https://demo.blockpass.org/?clientId=#####&serviceName=#####&env=staging
 
 Scan the QR code and follow instructions  
-Currently all identity fields and 2 certificates are required to register.  
+Currently all identity fields and 3 certificates are required to register.  
 This is configurable 
 
 ## D. Review registrations
@@ -69,14 +76,7 @@ It is also possible to batch export all approved data
 
 ### 2. APIs
 
-We offer 2 types of APIs
-- Query profile' status by User ID  
-This API returns only status of a profile. No personal data
-
-- Query full profiles by Used ID  
-This API returns all personal data submitted to the service  
-The client must provide a cryptographic key to encrypt the personal data when using this API
-
-> :point_right: contact us for more information about our APIs
+See our API documentation
+https://github.com/blockpass-org/blockpass/blob/master/docs/kyc-connect-dashboard/api.md
 
 

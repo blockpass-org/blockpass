@@ -1,10 +1,10 @@
 # Nginx configuration
 
-_You need enable HTTPS/SSL during instalation before following instruction below_
+_You need to enable HTTPS/SSL during installation before following instructions below_
 
-- KYCConnect work behind nginx instance and it can fully configurable by modify `nginx.conf`
+- KYC Connect works behind nginx server and it can configured by modifying the `nginx.conf` file
 
-- With default nginx allow access all KYC connect endpoints
+- By default nginx allows access to all KYC Connect endpoints and login form
 
 ```sh
   location / {
@@ -15,18 +15,18 @@ _You need enable HTTPS/SSL during instalation before following instruction below
 
 ## Important Routes
 
-- `/kyc/1.0/sdk/endpoint/*`: Using for mobile app communication (upload data, check status)
+- `/kyc/1.0/sdk/endpoint/*`: Used by mobile app to communicate with the dashboard (upload data, check status)
 
-- `/kyc/1.0/connect/*`: Using for [Data extraction](./endpoints.md)
+- `/kyc/1.0/connect/*`: Used for [Data extraction](./endpoints.md)
 
-## Use case 1 - Restricted IP for dashboard access
+## Use case - Restrict dashboard access by IP
 
-- Usecase:
+- Use case:
 
-  Default config is too open( Dashboard can be access via public internet). Our expectations:
+  Default config is open to the world (Dashboard can be access via internet). Goal:
 
-  - Dashboard can only access via Some IP
-  - Blockpass mobile application can communication with KYCConnect without blocked
+  - Dashboard can only be accessed by specific IPs
+  - Blockpass mobile application can still communicate with KYC Connect without being blocked
 
 - Nginx config:
 
@@ -37,7 +37,7 @@ _You need enable HTTPS/SSL during instalation before following instruction below
         proxy_set_header Host ${HOST_NAME};
     }
 
-    # Only Allow xxx.yyy.zz.k access dashboard
+    # Only Allow xxx.yyy.zz.k IP to access the dashboard
     location / {
         proxy_pass http://web;
         allow xxx.yyy.zz.k;
@@ -45,7 +45,7 @@ _You need enable HTTPS/SSL during instalation before following instruction below
     }
 ```
 
-- Restart service to apply new config
+- Restart service to apply the new config
 
 ```sh
 docker-compose restart

@@ -1,39 +1,56 @@
 # API
 
-
-
 ## Before you begin
 
 Make sure you have received your API key
 
 > :point_right: contact us to get your `API key`
 
+## KYC application data fields:
+
+- `refId`: Merchant reference ID
+- `blockPassID`: Blockpass registration ID
+- `status`: Status of KYC application (`waiting` | `inreview` | `approved`)
+- `isArchived`: KYC application archived status
+
+  - `true`: All KYC application 's attributes are deleted
+  - `false`: KYC Connect still keep attributes inside database
+
+- `inreviewDate`: Start revieweing date
+- `waitingDate`: Last submited date
+- `approvedDate`: Approval date
+- `willArchiveAtDate`: KYC application will auto archive at datetime (In case `API key` enable **Archive after extract data**)
+
 ## Get all users statuses
 
-Retrieve current status of KYC application 
+Retrieve current status of KYC application
 
-```` js
+```js
 curl -X GET \ https://<DASHBOARD_URL>/kyc/1.0/connect/<CLIENT_ID>/applicants/<STATUS> \
   -H 'Authorization: <API_Key>' \
   -H 'Cache-Control: no-cache'
 
-````
-Path paramaters: 
-  - STATUS (optional): Default value return all status. Possible values for specific filter (`waiting` | `inreview` | `approved`)
-  
+```
+
+Path paramaters:
+
+- STATUS (optional): Default value return all status. Possible values for specific filter (`waiting` | `inreview` | `approved`)
+
 Query paramters:
-  - skip (optional) : Number of record skiped
-  - limit (optional) : Maximum of record return 
+
+- skip (optional) : Number of record skiped
+- limit (optional) : Maximum of record return
 
 returns the list of applicants and their current KYC statuses
 
-```` json
+```json
 {
   "status": "success",
   "data": {
     "records": [
       {
         "status": "waiting",
+        "isArchived": false,
         "_id": "5bbad529853cb200150fb78d",
         "blockPassID": "5bbad527e37b52831146dae1",
         "refId": "random-1538970917175"
@@ -45,102 +62,103 @@ returns the list of applicants and their current KYC statuses
     "limit": 5
   }
 }
-````
-
+```
 
 ## Get status by RefID
 
-```` js
+```js
 curl -X GET \
   https://<DASHBOARD_URL>/kyc/1.0/connect/<CLIENT_ID>/refId/<REFID> \
   -H 'Authorization: <API_Key' \
   -H 'cache-control: no-cache'
-````
+```
 
 returns current status and history of status changes
 
-```` json
-{  
-   "status":"success",
-   "data":{  
-      "status":"inreview",
-      "refId":"1849-4849-3848-1944",
-      "blockPassID":"5fe95a995f8c44000e972445",
-      "inreviewDate":"2018-11-12T10:49:17.973Z",
-      "waitingDate":"2018-11-12T10:49:03.017Z"
-   }
+```json
+{
+  "status": "success",
+  "data": {
+    "status": "inreview",
+    "isArchived": false,
+    "refId": "1849-4849-3848-1944",
+    "blockPassID": "5fe95a995f8c44000e972445",
+    "inreviewDate": "2018-11-12T10:49:17.973Z",
+    "waitingDate": "2018-11-12T10:49:03.017Z"
+  }
 }
-````
+```
 
-## Get status and raw data by RefID 
+## Get status and raw data by RefID
 
-```` js
+```js
 curl -X GET \
   https://<DASHBOARD_URL>/kyc/1.0/connect/<CLIENT_ID>/refId/<REFID> \
   -H 'Authorization: <API_KEY>' \
   -H 'cache-control: no-cache'
-```` 
+```
 
 returns
 
-```` json
+```json
 {
-    "status": "success",
-    "data": {
-        "status": "inreview",
-        "refId": "1",
-        "blockPassID": "5be95a995f8c44000e972445",
-        "inreviewDate": "2018-11-12T10:49:17.973Z",
-        "waitingDate": "2018-11-12T10:49:03.017Z",
-        "identities": {
-            "address": {
-                "type": "string",
-                "value": "{\"postalCode\":\"62576-6471\",\"city\":\"Luettgenchester\",\"address\":\"4611 Zieme Knoll\",\"extraInfo\":\"extra\",\"country\":\"VNM\",\"state\":\"\"}"
-            },
-            "dob": {
-                "type": "string",
-                "value": "12/31/2016"
-            },
-            "email": {
-                "type": "string",
-                "value": "52777-50830-Alexandre42@yahoo.com"
-            },
-            "family_name": {
-                "type": "string",
-                "value": "StromanBot"
-            },
-            "given_name": {
-                "type": "string",
-                "value": "Helmer"
-            },
-            "phone": {
-                "type": "string",
-                "value": "{\"countryCode\":\"VNM\",\"countryCode2\":\"vn\",\"phoneNumber\":\"+84987543212\",\"number\":\"987543212\"}"
-            },
-            "selfie_national_id": {
-                "type": "base64",
-                "value": "/9j/4AAQSkZJRgABAQEASABIAAD/<...>"
-            },
-            "proof_of_address": {
-                "type": "base64",
-                "value": "/9j/4AAQSkZJRgABAQEASABI<...>"
-            },
-            "selfie": {
-                "type": "base64",
-                "value": "/9j/4AAQSkZJRgABAQEA<...>"
-            },
-            "passport": {
-                "type": "base64",
-                "value": "/9j/4AAQSkZJ<...>"
-            }
-        },
-        "certs": {
-            "onfido-service-cert": "{\"@context\":[{\"@version\":1.1},\,<...>",
-            "complyadvantage-service-cert": "{\"@context\":[{\"@version\":1.1},\<...>"
-        }
+  "status": "success",
+  "data": {
+    "status": "inreview",
+    "refId": "1",
+    "isArchived": false,
+    "blockPassID": "5be95a995f8c44000e972445",
+    "inreviewDate": "2018-11-12T10:49:17.973Z",
+    "waitingDate": "2018-11-12T10:49:03.017Z",
+    "identities": {
+      "address": {
+        "type": "string",
+        "value": "{\"postalCode\":\"62576-6471\",\"city\":\"Luettgenchester\",\"address\":\"4611 Zieme Knoll\",\"extraInfo\":\"extra\",\"country\":\"VNM\",\"state\":\"\"}"
+      },
+      "dob": {
+        "type": "string",
+        "value": "12/31/2016"
+      },
+      "email": {
+        "type": "string",
+        "value": "52777-50830-Alexandre42@yahoo.com"
+      },
+      "family_name": {
+        "type": "string",
+        "value": "StromanBot"
+      },
+      "given_name": {
+        "type": "string",
+        "value": "Helmer"
+      },
+      "phone": {
+        "type": "string",
+        "value": "{\"countryCode\":\"VNM\",\"countryCode2\":\"vn\",\"phoneNumber\":\"+84987543212\",\"number\":\"987543212\"}"
+      },
+      "selfie_national_id": {
+        "type": "base64",
+        "value": "/9j/4AAQSkZJRgABAQEASABIAAD/<...>"
+      },
+      "proof_of_address": {
+        "type": "base64",
+        "value": "/9j/4AAQSkZJRgABAQEASABI<...>"
+      },
+      "selfie": {
+        "type": "base64",
+        "value": "/9j/4AAQSkZJRgABAQEA<...>"
+      },
+      "passport": {
+        "type": "base64",
+        "value": "/9j/4AAQSkZJ<...>"
+      }
+    },
+    "certs": {
+      "onfido-service-cert": "{\"@context\":[{\"@version\":1.1},,<...>",
+      "complyadvantage-service-cert": "{\"@context\":[{\"@version\":1.1},<...>"
     }
-} 
-````
+  }
+}
+```
 
 ## Encryption
 
@@ -155,3 +173,52 @@ To protect users data we highly recommend merchants to use an encryption key to 
 
 > :point_right: contact us for additional information
 
+## Archive after extract data (v1.7+)
+
+From v1.7 API key support feature archive KYC application after X seconds (you can set is 0 - default value to disable)
+
+![Export config](/docs/kyc-connect-dashboard/imgs/Archive-ApiKey.png)
+
+Example:
+
+```js
+curl -X GET \
+  https://<DASHBOARD_URL>/kyc/1.0/connect/<CLIENT_ID>/refId/<REFID> \
+  -H 'Authorization: <API_KEY>' \
+  -H 'cache-control: no-cache'
+```
+
+returns record with `willArchiveAtDate`
+
+```json
+{
+  "status": "success",
+  "data": {
+    "status": "approved",
+    "refId": "5",
+    "isArchived": false,
+    "willArchiveAtDate": "2019-04-01T10:49:03.017Z",
+    ....
+    "identities": {
+      ...
+    }
+  }
+}
+```
+
+after `willArchiveAtDate`. Trying to query again we will get `isArchived` set to **true** and no `identities` (raw data was deleted)
+
+returns record with `willArchiveAtDate`
+
+```json
+{
+  "status": "success",
+  "data": {
+    "status": "approved",
+    "refId": "5",
+    "isArchived": true,
+    "willArchiveAtDate": "2019-04-01T10:49:03.017Z",
+    ....
+  }
+}
+```

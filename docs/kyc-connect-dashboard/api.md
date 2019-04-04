@@ -6,24 +6,32 @@ Make sure you have received your API key
 
 > :point_right: contact us to get your `API key`
 
-## KYC application data fields:
+## Extract and Archive. Best practice
+
+Personal KYC data should not sit in KYC Connect database forever.
+We recommend using the API described below to extract data and store them in a secure environment.
+
+Once data of a profile have been extracted, you can auto-archive it in the KYC Connect dashboard. All raw KYC data will be deleted. Only meta-data will remain (status, history, certificates if any)
+
+
+## KYC data attributes description:
 
 - `refId`: Merchant reference ID
 - `blockPassID`: Blockpass registration ID
 - `status`: Status of KYC application (`waiting` | `inreview` | `approved`)
 - `isArchived`: KYC application archived status
 
-  - `true`: All KYC application 's attributes are deleted
-  - `false`: KYC Connect still keep attributes inside database
+  - `true`: All KYC applications' attributes were deleted by operator
+  - `false`: Data are still available in KYC Connect database
 
-- `inreviewDate`: Start revieweing date
-- `waitingDate`: Last submited date
+- `inreviewDate`: Start review date
+- `waitingDate`: Last submitted date
 - `approvedDate`: Approval date
-- `willArchiveAtDate`: KYC application will auto archive at datetime (In case `API key` enable **Archive after extract data**)
+- `willArchiveAtDate`: KYC Connect will auto archive when  date is reached (only returned if `Archive after extract data` was defined in `API key` management settings)
 
 ## Get all users statuses
 
-Retrieve current status of KYC application
+Retrieve current status of all KYC applicationa
 
 ```js
 curl -X GET \ https://<DASHBOARD_URL>/kyc/1.0/connect/<CLIENT_ID>/applicants/<STATUS> \
@@ -34,12 +42,12 @@ curl -X GET \ https://<DASHBOARD_URL>/kyc/1.0/connect/<CLIENT_ID>/applicants/<ST
 
 Path paramaters:
 
-- STATUS (optional): Default value return all status. Possible values for specific filter (`waiting` | `inreview` | `approved`)
+- STATUS (optional): Default value return all statuses. Possible values for specific filter (`waiting` | `inreview` | `approved`)
 
 Query paramters:
 
-- skip (optional) : Number of record skiped
-- limit (optional) : Maximum of record return
+- skip (optional) : Number of records skipped
+- limit (optional) : Maximum of records returned
 
 returns the list of applicants and their current KYC statuses
 
@@ -52,7 +60,7 @@ returns the list of applicants and their current KYC statuses
         "status": "waiting",
         "isArchived": false,
         "_id": "5bbad529853cb200150fb78d",
-        "blockPassID": "5bbad527e37b52831146dae1",
+        "blockPassID": "5bbad527e37b52831146dse1",
         "refId": "random-1538970917175"
       },
       {...}
@@ -173,9 +181,12 @@ To protect users data we highly recommend merchants to use an encryption key to 
 
 > :point_right: contact us for additional information
 
-## Archive after extract data (v1.7+)
+## Auto-archive local data after API extraction (v1.7+)
 
-From v1.7 API key support feature archive KYC application after X seconds (you can set is 0 - default value to disable)
+From KYC Connect `v1.7`, API supports auto-archive KYC attributes after X seconds
+
+* leave empty or set to 0 to disable auto-archive)
+* 10 sec recommended  
 
 ![Export config](/docs/kyc-connect-dashboard/imgs/Archive-ApiKey.png)
 
@@ -206,9 +217,9 @@ returns record with `willArchiveAtDate`
 }
 ```
 
-after `willArchiveAtDate`. Trying to query again we will get `isArchived` set to **true** and no `identities` (raw data was deleted)
+after `willArchiveAtDate` happens,  running the query again will return `isArchived` set to **true** and no `identities` (raw data was deleted)
 
-returns record with `willArchiveAtDate`
+Example with `willArchiveAtDate` and `isArchived` set to true:
 
 ```json
 {

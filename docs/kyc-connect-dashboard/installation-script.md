@@ -4,7 +4,7 @@
 
   - `Hostname`
     Hostname binding to this service  
-    ex: `your-domain.com`
+    ex: `blockpass.your-domain.com`
 
   - `Port`  
     Service Port (on the host system)  
@@ -24,7 +24,7 @@
     Auto configuration string that you can get from the Developer Portal. 
     > :point_right: contact us to get this parameter.   
 
-    If you have access to developer portal, follow instructions [here](./kyc-config.md) to get the parameter.
+    If you have access to the developer portal, follow instructions [here](./kyc-config.md) to get the parameter.
 
     It includes your `service name`, your `clientId`, your `clientSecret`, the `status` of the service (active or inactive) and the `images` paths your have configured.
 
@@ -32,11 +32,11 @@
 
   If you already have your own https proxy (ex: Nginx) you can skip this by typing `No`.
 
-  But if you want to host the solution using HTTPS/SSL press Enter and it will ask for your public/private keys.
+  If you want to host the solution using HTTPS/SSL press Enter and it will ask for your certificate public/private keys.
 
   - `SSL Certificate` of your domain.
 
-    Paste the content of certificate file. It usually starts with "-----BEGIN CERTIFICATE-----" and ends with "-----END CERTIFICATE-----"
+    Paste the content of the certificate file. It usually starts with "-----BEGIN CERTIFICATE-----" and ends with "-----END CERTIFICATE-----"
 
     It should probably contain multiple certificates (Primary - Intermediate - Root)
 
@@ -51,9 +51,9 @@
 
 - Google Web push notification :
 
-  If you need Push notification, make sure you declare the following environment variables.
+  If you want to enable Push notification in the browser, make sure you declare the following environment variables.
 
-  (Don't forget to restart KYC Connect using ./blockpass start if it was already running)
+  (Don't forget to restart KYC Connect using `./blockpass start` if it was already running)
 
   - `PN_GOOGLE_API_KEY`  
     Push notifications API key  
@@ -69,11 +69,11 @@
 
   After a KYC profile is approved, the reviewer can issue a `certificate` to user
 
-  Certificate is digital document formatted as [json-ld](https://w3c-dvcg.github.io/ld-signatures/) and signed with ECDSA (Bitcoin key)
+  Certificate is a digital document formatted as [json-ld](https://w3c-dvcg.github.io/ld-signatures/) and signed with ECDSA (Bitcoin key)
 
-  To configure a certicate, some extra settings are required on the `Developer Portal` [Guide Here](./certificate.md)
+  To configure a certificate, some extra settings are required in the `Developer Portal` [Guide Here](./certificate.md)
 
-  To issue certificates, you need a ECDSA Key pair
+  To issue certificates, you need to generate an ECDSA Key pair
 
   - `Public WIF Key(Bitcoin address)` your Bitcoin Address as public key
 

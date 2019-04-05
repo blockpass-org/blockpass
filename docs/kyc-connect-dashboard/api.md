@@ -31,7 +31,7 @@ Once data of a profile have been extracted, you can auto-archive it in the KYC C
 
 ## Get all users statuses
 
-Retrieve current status of all KYC applicationa
+Retrieve current status of all KYC applications
 
 ```js
 curl -X GET \ https://<DASHBOARD_URL>/kyc/1.0/connect/<CLIENT_ID>/applicants/<STATUS> \
@@ -40,11 +40,11 @@ curl -X GET \ https://<DASHBOARD_URL>/kyc/1.0/connect/<CLIENT_ID>/applicants/<ST
 
 ```
 
-Path paramaters:
+Path parameters:
 
 - STATUS (optional): Default value return all statuses. Possible values for specific filter (`waiting` | `inreview` | `approved`)
 
-Query paramters:
+Query parameters:
 
 - skip (optional) : Number of records skipped
 - limit (optional) : Maximum of records returned
@@ -174,10 +174,10 @@ To protect users data we highly recommend merchants to use an encryption key to 
 
 ### Principle
 
-- Server generates RSA key pair and share public key with merchant
+- Server generates an RSA key pair and share public key with merchant
 - Merchant generates AES key and encrypt with RSA public key (EK)
 - To query raw data with API, (EK) must be attached.
-- Server returns encrypted data
+- Server returns the encrypted data
 
 > :point_right: contact us for additional information
 

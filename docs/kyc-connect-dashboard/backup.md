@@ -20,6 +20,15 @@ To backup mongoDB while server is running, it is required to use `mongodump` uti
 Now exit the container and copy the backup folder locally  
 `docker cp formpass_mongodb.ins_1:/data/db/backup .`
 
+#### Restore backup
+
+- SSH in container  
+  `docker exec -it kycconnect_mongodb.ins_1 bash`
+- Go to backup folder  
+  `cd /data/db/backup`
+- Restore database  
+  `mongorestore`  
+
 ## Manual backup
 
 - Go to KYC Connect install folder
@@ -27,6 +36,17 @@ Now exit the container and copy the backup folder locally
   `docker-compose stop`
 - Duplicate database folder  
   `cp -R mongo mongo-backup`
+- Restart server
+  `docker-compose up -d`
+  
+#### Restore backup
+
+- Make sure the server is not running  
+  `docker-compose stop`
+- Rename previous database folder  
+  `mv -R mongo mongo-old`
+- Restore backup  
+  `mv mongo-backup mongo`
 - Restart server
   `docker-compose up -d`
 

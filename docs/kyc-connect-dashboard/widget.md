@@ -28,7 +28,7 @@ Example:
   <!-- BLOCKPASS WIDGET SCRIPT BEGIN-->
 <script>(function () {
     const s = document.createElement('script');
-    s.src = 'https://cdn.blockpass.org/widget/scripts/release/1.0.1/embeded.prod.js';
+    s.src = 'https://cdn.blockpass.org/widget/scripts/release/1.0.4/embeded.prod.js';
     s.async = true;
     window.bpWidget = {
       // replace by environment

@@ -12,10 +12,16 @@
 
   `./blockpass logs`
 
-## Ugrade
+## Ugrade version
+
+While server is running, run:
 
   `./blockpass upgrade`
 
-  Confirm and choose the version you want to use.
+Confirm and choose the version you want to install.
+Ex: `latest` or `1.8.0`
 
-  We recommend to use latest.
+Corresponding images will be downloading, server is still up during this operation.
+When images are downloaded, server will restart to apply the new version (usually takes few seconds).
+
+> :point_right: It is a good idea to make a backup of database before upgrading (see [Backup](./backup.md) section)

@@ -26,14 +26,20 @@ At first launch, you will be asked to input the `Deployment key` (the one you ha
 
 `You're good to go!!! 🎉`
 
-## What's next?
+## What to do next?
 
 - [Create a reviewer](./create-reviewer.md)
 - [Setup the widget](./widget.md)
 - [Stop/Start/Logs KYC Connect](./cli.md)
 - [Config your endpoints](./endpoints.md)
+
+## KYC Connect API
+- [Extract data by API](./api.md)  
+
+## Optional configuration
 - [Upgrade/Change version](./cli.md)
-- [Multiple dashboards](./multiple-dashboards.md)
+- [Setup multiple dashboards](./multiple-dashboards.md)
 - [Generate a Certificate](./certificate.md)
-- [Extract data by API](./api.md)
 - [Nginx - Restrict access to dashboard by IP](./nginx-config.md)
+- [Enable Web Push Notification](./web-pushnotification.md)
+- [Backup data](./backup.md)

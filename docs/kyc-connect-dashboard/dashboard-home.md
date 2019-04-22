@@ -37,3 +37,4 @@ At first launch, you will be asked to input the `Deployment key` (the one you ha
 - [Generate a Certificate](./certificate.md)
 - [Extract data by API](./api.md)
 - [Nginx - Restrict access to dashboard by IP](./nginx-config.md)
+- [Web push-notification configuration](./web-pushnotification.md)

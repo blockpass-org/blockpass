@@ -1,21 +1,6 @@
-# Welcome to the Blockpass documentation
+# The Blockpass documentation has a new home
 
-
-Blockpass offers 2 ways of integration for Merchants
-
-  * [using our SDKs](/docs/sdk.md) (will be deprecated soon)
-    + integrates with your own platform and workflow
-    + immediate access to data
-    + customizable
-    + requires coding (Node.Js preferable)
-  
-  * [using our KYC dashboard](/docs/kyc-dashboard.md)
-    + provides an interface specifically designed for KYC verification
-    + integrates all features of Blockpass by default
-    + hosted by you
-    + easy installation
-    + few coding required
-    + provides API to retrieve data
+:point_right:	The new docs are available at https://docs.blockpass.org
 
 
 
